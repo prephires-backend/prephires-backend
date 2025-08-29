@@ -1,0 +1,1 @@
+def compute_scores(x): return {'overall_score':80,'sub_scores':{},'keyword_coverage':{'coverage_percent':0,'present':[],'missing':[]},'findings':[]}
