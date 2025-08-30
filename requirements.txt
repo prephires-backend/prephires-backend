@@ -2,5 +2,7 @@ fastapi
 uvicorn
 python-multipart
 pydantic
+PyPDF2
 pdfplumber
+Pillow
 playwright==1.46.0
