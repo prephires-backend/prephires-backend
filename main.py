@@ -75,3 +75,23 @@ def analyze_pdf(file: UploadFile = File(...)):
     data["latency_ms"] = int((time.time() - t0) * 1000)
     data["_source"] = "pdf"
     return data
+# ... keep all your existing imports at the top
+from fastapi.responses import FileResponse
+from playwright.async_api import async_playwright
+
+# ... keep your existing app, CORS, models, analyze, analyze_pdf etc.
+
+@app.get("/screenshot")
+async def screenshot_linkedin(url: str):
+    """
+    Takes a screenshot of the given LinkedIn profile URL.
+    NOTE: This requires Playwright + Chromium installed in your environment.
+    """
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        page = await browser.new_page()
+        await page.goto(url)
+        path = "screenshot.png"
+        await page.screenshot(path=path, full_page=True)
+        await browser.close()
+        return FileResponse(path, media_type="image/png")
