@@ -5,5 +5,4 @@ pydantic==2.7.1
 PyPDF2==3.0.1
 pdfplumber==0.11.4
 Pillow==10.4.0
-# Playwright is optional. Enable only if you really want screenshots right now:
-# playwright==1.46.0
+playwright==1.46.0
