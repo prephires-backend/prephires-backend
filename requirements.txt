@@ -1,8 +1,9 @@
-fastapi
-uvicorn
-python-multipart
-pydantic
-PyPDF2
-pdfplumber
-Pillow
-playwright==1.46.0
+fastapi==0.111.0
+uvicorn==0.30.1
+python-multipart==0.0.9
+pydantic==2.7.1
+PyPDF2==3.0.1
+pdfplumber==0.11.4
+Pillow==10.4.0
+# Playwright is optional. Enable only if you really want screenshots right now:
+# playwright==1.46.0
