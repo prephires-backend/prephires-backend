@@ -168,4 +168,31 @@ async def screenshot_linkedin(url: str):
         except Exception:
             pass
         raise HTTPException(status_code=500, detail=f"Screenshot failed: {e}")
+# --- optional screenshot endpoint (won't break deploys if Playwright is missing) ---
+from fastapi import HTTPException
+
+@app.get("/screenshot")
+async def screenshot_linkedin(url: str):
+    """
+    Optional: takes a screenshot of the given LinkedIn profile URL.
+    If Playwright isn't installed, return 501 so frontend can hide the image.
+    """
+    try:
+        from playwright.async_api import async_playwright  # lazy import
+    except Exception:
+        # Playwright not available; keep API healthy
+        raise HTTPException(status_code=501, detail="Screenshot service not enabled")
+
+    try:
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(headless=True)
+            page = await browser.new_page()
+            await page.goto(url, wait_until="domcontentloaded", timeout=30000)
+            path = "screenshot.png"
+            await page.screenshot(path=path, full_page=True)
+            await browser.close()
+            from fastapi.responses import FileResponse
+            return FileResponse(path, media_type="image/png")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Screenshot error: {e}")
 
