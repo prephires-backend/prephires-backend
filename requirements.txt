@@ -1,6 +1,6 @@
 fastapi
-uvicorn
+uvicorn[standard]
 python-multipart
 pydantic
-PyPDF2
+pypdf==4.2.0
 playwright==1.46.0
